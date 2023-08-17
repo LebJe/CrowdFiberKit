@@ -1,0 +1,36 @@
+{
+	// Use IntelliSense to learn about possible attributes.
+	// Hover to view descriptions of existing attributes.
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"type": "lldb",
+			"request": "launch",
+			"name": "Debug",
+			"program": "${workspaceFolder}/<executable file>",
+			"args": [],
+			"cwd": "${workspaceFolder}"
+		},
+		{
+			"type": "lldb",
+			"request": "launch",
+			"sourceLanguages": ["swift"],
+			"name": "Debug test",
+			"program": "${workspaceFolder:CrowdFiberKit}/.build/debug/test",
+			"args": [],
+			"cwd": "${workspaceFolder:CrowdFiberKit}",
+			"preLaunchTask": "swift: Build Debug test"
+		},
+		{
+			"type": "lldb",
+			"request": "launch",
+			"sourceLanguages": ["swift"],
+			"name": "Release test",
+			"program": "${workspaceFolder:CrowdFiberKit}/.build/release/test",
+			"args": [],
+			"cwd": "${workspaceFolder:CrowdFiberKit}",
+			"preLaunchTask": "swift: Build Release test"
+		}
+	]
+}
