@@ -1,4 +1,4 @@
-// Copyright (c) 2022 Jeff Lebrun
+// Copyright (c) 2023 Jeff Lebrun
 //
 //  Licensed under the MIT License.
 //
@@ -10,6 +10,7 @@ import WebURL
 
 public struct PaginationMetadata {
 	public let currentPage: Int
+	public let totalPages: Int
 	public let totalObjects: Int
 }
 
@@ -21,6 +22,7 @@ public extension CF {
 		private var objects: [E] = []
 		private var currentIndex = 0
 		private var currentPage = 1
+		private var pageCount: Int? = nil
 		private var nextPageExists = false
 		private var url: WebURL
 		private let updateURL: (Int, inout WebURL) -> Void
@@ -78,7 +80,10 @@ public extension CF {
 			if moreObjectsCheck {
 				let value = self.objects[self.currentIndex]
 				self.currentIndex += 1
-				return (value, PaginationMetadata(currentPage: self.currentPage, totalObjects: self.totalObjects))
+				return (
+					value,
+					PaginationMetadata(currentPage: self.currentPage, totalPages: self.pageCount ?? 0, totalObjects: self.totalObjects)
+				)
 			} else {
 				guard self.nextPageExists else {
 					return nil
@@ -97,7 +102,10 @@ public extension CF {
 
 				let value = self.objects[self.currentIndex]
 				self.currentIndex += 1
-				return (value, PaginationMetadata(currentPage: self.currentPage, totalObjects: self.totalObjects))
+				return (
+					value,
+					PaginationMetadata(currentPage: self.currentPage, totalPages: self.pageCount ?? 0, totalObjects: self.totalObjects)
+				)
 			}
 		}
 
@@ -115,6 +123,15 @@ public extension CF {
 					let pageURLs = parsePaginationLink(response.headers["Link", caseSensitive: false] ?? "")
 
 					self.nextPageExists = pageURLs.first(where: { $0.type == .next }) != nil
+
+					// Get total amount of pages
+					if self.pageCount == nil {
+						if let lastPageURL = pageURLs.first(where: { $0.type == .last }) {
+							if let pageNumStr = WebURL(lastPageURL.url)!.formParams.page, let pageNum = Int(pageNumStr) {
+								self.pageCount = pageNum
+							}
+						}
+					}
 
 					self.totalObjects = Int(response.headers["X-Total-Count", caseSensitive: false] ?? "") ?? 0
 

@@ -1,4 +1,4 @@
-// Copyright (c) 2022 Jeff Lebrun
+// Copyright (c) 2023 Jeff Lebrun
 //
 //  Licensed under the MIT License.
 //
@@ -59,9 +59,9 @@ func sendAndHandle(
 	}
 }
 
-func sendAndHandle<T: Decodable, C: GHCHTTPClient>(
+func sendAndHandle<T: Decodable>(
 	request: GHCHTTPRequest,
-	client: C,
+	client: some GHCHTTPClient,
 	decodeType: T.Type
 ) async -> Result<T, CF.ErrorType> {
 	let result = await client.send(request: request)

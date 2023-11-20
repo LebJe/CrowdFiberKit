@@ -22,7 +22,10 @@ let package = Package(
 		.package(url: "https://github.com/swift-extras/swift-extras-json.git", from: "0.6.0"),
 
 		// A new URL type for Swift
-		.package(url: "https://github.com/karwa/swift-url.git", from: "0.2.0"),
+		.package(url: "https://github.com/karwa/swift-url.git", from: "0.4.0"),
+
+		// A Collection of PropertyWrappers to make custom Serialization of Swift Codable Types easy
+		.package(url: "https://github.com/GottaGetSwifty/CodableWrappers.git", .upToNextMajor(from: "2.0.0")),
 
 		.package(url: "https://github.com/LebJe/GenericHTTPClient.git", branch: "main"),
 	],
@@ -46,6 +49,7 @@ let package = Package(
 				.product(name: "ExtrasJSON", package: "swift-extras-json"),
 				.product(name: "JSON", package: "JSON"),
 				.product(name: "WebURL", package: "swift-url"),
+				.product(name: "CodableWrappers", package: "CodableWrappers"),
 			]
 		),
 		.testTarget(

@@ -1,4 +1,4 @@
-// Copyright (c) 2022 Jeff Lebrun
+// Copyright (c) 2023 Jeff Lebrun
 //
 //  Licensed under the MIT License.
 //
@@ -22,7 +22,7 @@ func + (lhs: URL, rhs: [String]) -> URL {
 }
 
 /// Append a path component to `lhs`.
-func + <S: StringProtocol>(lhs: WebURL, rhs: S) -> WebURL {
+func + (lhs: WebURL, rhs: some StringProtocol) -> WebURL {
 	var url = lhs
 	url.pathComponents += [rhs]
 	return url
@@ -36,7 +36,7 @@ func + <C: Collection>(lhs: WebURL, rhs: C) -> WebURL where C.Element: StringPro
 }
 
 /// Append a path component to `lhs`.
-func += <S: StringProtocol>(lhs: inout WebURL, rhs: S) {
+func += (lhs: inout WebURL, rhs: some StringProtocol) {
 	lhs.pathComponents += [rhs]
 }
 

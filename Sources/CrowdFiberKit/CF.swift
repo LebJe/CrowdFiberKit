@@ -1,12 +1,35 @@
-// Copyright (c) 2022 Jeff Lebrun
+// Copyright (c) 2023 Jeff Lebrun
 //
 //  Licensed under the MIT License.
 //
 //  The full text of the license can be found in the file named LICENSE.
 
+import struct Foundation.URL
 import GenericHTTPClient
+import WebURL
 
 public enum CF {
+	public class Authenticator {
+		var url: WebURL
+
+		public var baseURL: URL {
+			get {
+				URL(string: self.url.serialized())!
+			} set {
+				self.url = WebURL(newValue.absoluteString)!
+			}
+		}
+
+		public var authType: AuthenticationType = .none
+		var client: any GHCHTTPClient
+
+		public init(baseURL: URL, authType: AuthenticationType = .none, client: any GHCHTTPClient) {
+			self.url = WebURL(baseURL.absoluteString)!
+			self.authType = authType
+			self.client = client
+		}
+	}
+
 	static let defaultHeaders: GHCHTTPHeaders = ["Accept": "application/json"]
 
 	public enum ErrorType: Error {
@@ -32,7 +55,7 @@ public enum CF {
 			switch self {
 				case let .error(str): return "Error message from CrowdFiber: \(str)"
 				case .noResponse: return "CrowdFiber did not return any JSON"
-				case let .notFound: return "The API object you requested was not found"
+				case .notFound: return "The API object you requested was not found"
 				case let .decodingError(
 				error,
 				rawJSON
