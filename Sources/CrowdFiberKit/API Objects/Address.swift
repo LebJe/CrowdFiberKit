@@ -130,6 +130,19 @@ public extension CF {
 			self.longitude = try container.decode(Double.self, forKey: CF.Address.CodingKeys.longitude)
 		}
 
+		public static func fromID(_ id: Int, authenticator: Authenticator) async -> Result<Address, CF.ErrorType> {
+			let url = authenticator.url + "addresses" + "\(id)"
+
+			let request = try! GHCHTTPRequest(url: url, headers: CF.defaultHeaders + authenticator.authType.headers)
+
+			let result = await sendAndHandle(request: request, client: authenticator.client, decodeType: Self.self)
+
+			switch result {
+				case let .success(address): return .success(address)
+				case let .failure(error): return .failure(error)
+			}
+		}
+
 		public static func find(
 			zoneID: Int? = nil,
 			hasActiveService: Bool? = nil,
