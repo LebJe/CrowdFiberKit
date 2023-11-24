@@ -29,8 +29,8 @@ public extension CF {
 		let addressZipCodeLast: Int?
 
 		public var timezone: String? = nil
-		public let latitude: Double
-		public let longitude: Double
+		public let latitude: Double?
+		public let longitude: Double?
 
 		public var details: AddressDetails {
 			.init(
