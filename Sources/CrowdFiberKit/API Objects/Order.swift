@@ -7,10 +7,26 @@
 import CodableWrappers
 import ExtrasJSON
 
+import Foundation
 import struct Foundation.Date
 import struct Foundation.URL
 import GenericHTTPClient
 import WebURL
+
+public struct MyCustomISO8601DateFormatter: ISO8601DateFormatterStaticCoder {
+	public static let iso8601DateFormatter: ISO8601DateFormatter = {
+		let formatter = ISO8601DateFormatter()
+		formatter.formatOptions = [
+			.withFullDate,
+			.withTime,
+			.withColonSeparatorInTime,
+			.withTimeZone,
+			.withDashSeparatorInDate,
+			.withFractionalSeconds,
+		]
+		return formatter
+	}()
+}
 
 public extension CF {
 	struct Order: Decodable {
@@ -24,6 +40,12 @@ public extension CF {
 		public var cancelled: Bool?
 		public var contracted: Bool?
 		public let paidBy: String?
+
+		@ISO8601DateFormatterDecoding<MyCustomISO8601DateFormatter>
+		public var createdAt: Date
+
+		@ISO8601DateFormatterDecoding<MyCustomISO8601DateFormatter>
+		public var updatedAt: Date
 
 		@FallbackDecoding<EmptyArray>
 		public var addresses: [OrderAddress]
@@ -40,6 +62,8 @@ public extension CF {
 			Cancelled: \(self.cancelled ?? false)
 			Contracted: \(self.contracted ?? false)
 			Paid By: \(self.paidBy ?? "(None)")
+			Created At: \(self.createdAt.description(with: .current) ?? "No Creation Date")
+			Updated At: \(self.updatedAt.description(with: .current) ?? "No Update Date")
 			Order Addresses:
 			\(self.addresses.map(\.description).joined(separator: "----------\n"))
 			"""
@@ -121,10 +145,10 @@ public extension CF {
 			public let addressType: String
 			public let addressableType: String
 
-			@OptionalCoding<ISO8601DateCoding>
+			@OptionalDecoding<ISO8601DateFormatterDecoding<MyCustomISO8601DateFormatter>>
 			public var createdAt: Date?
 
-			@OptionalCoding<ISO8601DateCoding>
+			@OptionalDecoding<ISO8601DateFormatterDecoding<MyCustomISO8601DateFormatter>>
 			public var updatedAt: Date?
 
 			public let address: [Address]?
@@ -174,10 +198,10 @@ public extension CF {
 			@ISO8601DateCoding
 			public var createdAt: Date
 
-			@OptionalCoding<ISO8601DateCoding>
+			@OptionalDecoding<ISO8601DateFormatterDecoding<MyCustomISO8601DateFormatter>>
 			public var updatedAt: Date?
 
-			@OptionalCoding<ISO8601DateCoding>
+			@OptionalDecoding<ISO8601DateFormatterDecoding<MyCustomISO8601DateFormatter>>
 			public var deletedAt: Date?
 
 			public let notableID: Int
@@ -217,6 +241,8 @@ public extension CF {
 			case contracted
 			case paidBy = "paid_by"
 			case addresses
+			case createdAt = "created_at"
+			case updatedAt = "updated_at"
 		}
 	}
 }
