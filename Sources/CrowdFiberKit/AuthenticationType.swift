@@ -1,4 +1,4 @@
-// Copyright (c) 2023 Jeff Lebrun
+// Copyright (c) 2026 Jeff Lebrun
 //
 //  Licensed under the MIT License.
 //
@@ -15,10 +15,10 @@ public extension CF {
 		var headers: GHCHTTPHeaders {
 			switch self {
 				case let .token(token):
-					return ["Authorization": "Token \(token)"]
+					["Authorization": "Token \(token)"]
 				case let .usernameAndPassword(username: username, password: password):
-					return ["Authorization": "Bearer \("\(username):\(password)".base64)"]
-				default: return [:]
+					["Authorization": "Bearer \("\(username):\(password)".base64)"]
+				default: [:]
 			}
 		}
 	}

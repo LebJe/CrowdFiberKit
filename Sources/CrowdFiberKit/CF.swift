@@ -1,4 +1,4 @@
-// Copyright (c) 2023 Jeff Lebrun
+// Copyright (c) 2026 Jeff Lebrun
 //
 //  Licensed under the MIT License.
 //
@@ -53,16 +53,16 @@ public enum CF {
 
 		public var description: String {
 			switch self {
-				case let .error(str): return "Error message from CrowdFiber: \(str)"
-				case .noResponse: return "CrowdFiber did not return any JSON"
-				case .notFound: return "The API object you requested was not found"
+				case let .error(str): "Error message from CrowdFiber: \(str)"
+				case .noResponse: "CrowdFiber did not return any JSON"
+				case .notFound: "The API object you requested was not found"
 				case let .decodingError(
 				error,
 				rawJSON
-			): return "Failed to decode type: \(error.localizedDescription) (from raw: \(rawJSON))"
-				case let .encodingError(error): return "Failed to encode type: \(error.localizedDescription)"
-				case let .clientError(error): return "HTTP Client error: \(error.localizedDescription)"
-				case let .other(error): return "Unknown error occurred: \(error.localizedDescription)"
+			): "Failed to decode type: \(error.localizedDescription) (from raw: \(rawJSON))"
+				case let .encodingError(error): "Failed to encode type: \(error.localizedDescription)"
+				case let .clientError(error): "HTTP Client error: \(error.localizedDescription)"
+				case let .other(error): "Unknown error occurred: \(error.localizedDescription)"
 			}
 		}
 	}

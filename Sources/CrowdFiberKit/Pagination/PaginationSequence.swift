@@ -1,4 +1,4 @@
-// Copyright (c) 2023 Jeff Lebrun
+// Copyright (c) 2026 Jeff Lebrun
 //
 //  Licensed under the MIT License.
 //
@@ -22,7 +22,7 @@ public extension CF {
 		private var objects: [E] = []
 		private var currentIndex = 0
 		private var currentPage = 1
-		private var pageCount: Int? = nil
+		private var pageCount: Int?
 		private var nextPageExists = false
 		private var url: WebURL
 		private let updateURL: (Int, inout WebURL) -> Void

@@ -1,4 +1,4 @@
-// Copyright (c) 2023 Jeff Lebrun
+// Copyright (c) 2026 Jeff Lebrun
 //
 //  Licensed under the MIT License.
 //
@@ -9,9 +9,9 @@ func parsePaginationLink(_ link: String) -> [PaginationLink] {
 
 	var dictionary: [String: String] = [:]
 
-	links.forEach {
-		let components = $0.components(separatedBy: "; ")
-		guard components.count >= 2 else { return }
+	for link in links {
+		let components = link.components(separatedBy: "; ")
+		guard components.count >= 2 else { continue }
 		let cleanPath = components[0].trimmingCharacters(in: .init(charactersIn: "<>"))
 		dictionary[components[1]] = cleanPath
 	}

@@ -1,4 +1,4 @@
-// swift-tools-version: 5.7
+// swift-tools-version: 5.9
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -25,7 +25,7 @@ let package = Package(
 		.package(url: "https://github.com/karwa/swift-url.git", from: "0.4.0"),
 
 		// A Collection of PropertyWrappers to make custom Serialization of Swift Codable Types easy
-		.package(url: "https://github.com/GottaGetSwifty/CodableWrappers.git", .upToNextMajor(from: "2.0.0")),
+		.package(url: "https://github.com/GottaGetSwifty/CodableWrappers.git", from: "3.1.0"),
 
 		.package(url: "https://github.com/LebJe/GenericHTTPClient.git", branch: "main"),
 	],

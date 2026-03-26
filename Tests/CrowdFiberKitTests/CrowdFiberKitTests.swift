@@ -1,4 +1,4 @@
-// Copyright (c) 2023 Jeff Lebrun
+// Copyright (c) 2026 Jeff Lebrun
 //
 //  Licensed under the MIT License.
 //
@@ -11,5 +11,5 @@ import GHCURLSession
 import XCTest
 
 final class CrowdFiberKitTests: XCTestCase {
-	func testExample() async throws {}
+	func testExample() {}
 }

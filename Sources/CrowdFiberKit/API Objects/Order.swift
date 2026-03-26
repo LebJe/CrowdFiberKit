@@ -1,4 +1,4 @@
-// Copyright (c) 2023 Jeff Lebrun
+// Copyright (c) 2026 Jeff Lebrun
 //
 //  Licensed under the MIT License.
 //
@@ -6,7 +6,6 @@
 
 import CodableWrappers
 import ExtrasJSON
-
 import Foundation
 import struct Foundation.Date
 import struct Foundation.URL
